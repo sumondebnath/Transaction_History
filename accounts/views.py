@@ -1,21 +1,21 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, authenticate
 from rest_framework.authtoken.models import Token
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.utils.encoding import force_bytes
 
-from accounts.models import CustomUser
+from django.contrib.auth.models import User
 from accounts.serializers import CustomUserSerializer, RegistrationSerializer, LoginSerializer
 
 
 
 class CustomUserViewset(viewsets.ModelViewSet):
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     serializer_class = CustomUserSerializer
+
+    permission_classes = [IsAuthenticated]
 
 
 class RegistrationViews(APIView):
@@ -26,8 +26,6 @@ class RegistrationViews(APIView):
         if serializer.is_valid():
             user = serializer.save()
             print(user)
-            # token = default_token_generator.make_token(user)
-            # uid = urlsafe_base64_encode(force_bytes(user.pk))
             return Response({"message" : "Registration Successfully!"}, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -36,19 +34,17 @@ class RegistrationViews(APIView):
 class LoginViewset(APIView):
     def post(self, request):
         serializer = LoginSerializer(data = self.request.data)
-        token = default_token_generator.make_token(self.request.user)
-        uid = urlsafe_base64_encode(force_bytes(self.request.user.pk))
 
         if serializer.is_valid():
-            email = serializer.validated_data["email"]
+            username = serializer.validated_data["username"]
             password = serializer.validated_data["password"]
 
-            user = authenticate(email=email, password=password)
+            user = authenticate(username=username, password=password)
 
             if user:
                 token , _ = Token.objects.get_or_create(user=user)
-                print(token)
-                print(_)
+                # print(token)
+                # print(_)
 
                 login(request, user)
                 return Response({
@@ -61,3 +57,23 @@ class LoginViewset(APIView):
                 }, status=status.HTTP_401_UNAUTHORIZED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+   
+
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            token = Token.objects.get(user=request.user)
+            print(token)
+            token.delete()
+            return Response({
+                "message": "Logout Successfully!",
+            }, status=status.HTTP_200_OK)
+        except Token.DoesNotExist:
+            return Response({"error": "Token Does Not Exist!"}, status=status.HTTP_400_BAD_REQUEST)
+
+

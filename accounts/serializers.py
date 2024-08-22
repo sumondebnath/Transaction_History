@@ -1,11 +1,11 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from accounts.models import CustomUser
+from django.contrib.auth.models import User
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomUser
+        model = User
         fields = "__all__"
 
 
@@ -13,7 +13,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField()
 
     class Meta:
-        model = CustomUser
+        model = User
         fields = ["username", "first_name", "last_name", "email", "password", "confirm_password"]
 
         extra_kwargs = {
@@ -33,10 +33,10 @@ class RegistrationSerializer(serializers.ModelSerializer):
         if password != confirm_password:
             raise ValidationError("Password and Confirm Password Does Not Matched!")
         
-        if CustomUser.objects.filter(email=email).exists():
+        if User.objects.filter(email=email).exists():
             raise ValidationError("Email Address Exists!")
         
-        account = CustomUser(username=username, first_name=first_name, last_name=last_name, email=email)
+        account = User(username=username, first_name=first_name, last_name=last_name, email=email)
 
         account.set_password(password)
         account.save()
@@ -44,5 +44,5 @@ class RegistrationSerializer(serializers.ModelSerializer):
     
 
 class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=True)
+    username = serializers.CharField(required=True)
     password = serializers.CharField(required=True)
