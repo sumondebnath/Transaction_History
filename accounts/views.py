@@ -7,7 +7,8 @@ from django.contrib.auth import login, authenticate
 from rest_framework.authtoken.models import Token
 
 from django.contrib.auth.models import User
-from accounts.serializers import CustomUserSerializer, RegistrationSerializer, LoginSerializer
+from accounts.models import Profile
+from accounts.serializers import CustomUserSerializer, RegistrationSerializer, LoginSerializer, ProfileSerializer
 
 
 
@@ -16,6 +17,19 @@ class CustomUserViewset(viewsets.ModelViewSet):
     serializer_class = CustomUserSerializer
 
     permission_classes = [IsAuthenticated]
+
+
+class ProfileViewset(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        user_id = self.request.query_params.get("user_id")
+        if user_id:
+            queryset = queryset.filter(user_id=user_id)
+        return queryset
 
 
 class RegistrationViews(APIView):

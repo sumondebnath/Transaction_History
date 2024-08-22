@@ -48,11 +48,8 @@ INSTALLED_APPS = [
     "allauth",
 
     "accounts",
+    "bank_transaction",
 ]
-
-
-
-
 
 
 CORS_ORIGIN_ALLOW_ALL = True
