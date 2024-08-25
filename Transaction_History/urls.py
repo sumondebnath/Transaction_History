@@ -17,9 +17,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from django.conf import settings
+from django.conf.urls.static import static
+from rest_framework.routers import DefaultRouter
+
+from accounts.views import CustomUserViewset, ProfileViewset
+
+router = DefaultRouter()
+
+router.register(r"users", CustomUserViewset,basename="users")
+router.register(r"profile", ProfileViewset, basename="profile")
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", include(router.urls)),
     # path("auth/", include("rest_framework.urls")),
     path("api/account/", include("accounts.urls")),
     path("api/bank/", include("bank_transaction.urls")),
 ]
+urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

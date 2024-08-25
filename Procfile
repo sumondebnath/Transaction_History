@@ -1,0 +1,1 @@
+web: gunicorn Transaction_History.wsgi
