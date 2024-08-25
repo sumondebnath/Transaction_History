@@ -5,11 +5,12 @@ from bank_transaction.views import BankAccountViews, TransactionViews, Transacti
 
 router = DefaultRouter()
 
-router.register(r"accounts", BankAccountViews, basename="bank_account")
+# router.register(r"accounts", BankAccountViews, basename="bank_account")
 # router.register(r"transaction", TransactionViews, basename="transaction")
 router.register(r"transaction purpose", TransactionPurposeViews, basename="purpose")
 
 urlpatterns = [
     path("", include(router.urls)),
     path("transaction/", TransactionViews.as_view(), name="transaction"),
+    path("accounts/", BankAccountViews.as_view(), name="bank_account"),
 ]
