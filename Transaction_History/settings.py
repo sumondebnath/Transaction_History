@@ -27,13 +27,13 @@ from datetime import timedelta
 SECRET_KEY = 'django-insecure-292(id&xmqjtfwe93vqmc&jg*(8y0jw!k6)ughkp=(o20*klg0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://transaction-history.up.railway.app/"
+    "https://transaction-history.up.railway.app/",
 ]
 
 
@@ -158,8 +158,8 @@ MEDIA_ROOT=BASE_DIR / 'media'
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
