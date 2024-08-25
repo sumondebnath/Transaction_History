@@ -1,1 +1,1 @@
-web: gunicorn Transaction_History.wsgi
+web: gunicorn Transaction_History.wsgi:application
