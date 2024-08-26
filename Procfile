@@ -1,1 +1,1 @@
-web: gunicorn Transaction_History.wsgi:application
+web: gunicorn Transaction_History.wsgi --log-file - 
