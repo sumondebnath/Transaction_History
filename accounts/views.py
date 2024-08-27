@@ -16,7 +16,8 @@ class CustomUserViewset(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = CustomUserSerializer
 
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticated]
 
 
 class ProfileViewset(viewsets.ModelViewSet):
