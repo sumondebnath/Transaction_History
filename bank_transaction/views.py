@@ -4,6 +4,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 from bank_transaction.models import BankAccount, Transaction, TransactionPurpose
 from bank_transaction.serializers import BankAccountSerializer, TransactionSerializer, TransactionPurposeSerializer
@@ -33,9 +34,19 @@ class BankAccountViews(APIView):
 
 
 
-# class TransactionViews(viewsets.ModelViewSet):
-#     queryset = Transaction.objects.all()
-#     serializer_class = TransactionSerializer    
+class TransactionGetQuerys(viewsets.ModelViewSet):
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer    
+    # permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        user_id = self.request.GET.get("user_id")
+        print(user_id)
+        if user_id:
+            queryset = Transaction.objects.filter(current_account__user_id=user_id)
+        return queryset
 
 
 class TransactionViews(APIView):
