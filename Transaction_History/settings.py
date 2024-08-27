@@ -31,9 +31,9 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://transaction-history.up.railway.app/",
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     "https://transaction-history.up.railway.app/",
+# ]
 
 
 # Application definition
