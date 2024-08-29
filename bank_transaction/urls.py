@@ -1,11 +1,11 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from bank_transaction.views import BankAccountViews, TransactionViews, TransactionPurposeViews, TransactionGetQuerys
+from bank_transaction.views import BankAccountViews, TransactionViews, TransactionPurposeViews, TransactionGetQuerys, BankAccountGETID
 
 router = DefaultRouter()
 
-# router.register(r"accounts", BankAccountViews, basename="bank_account")
+router.register(r"account", BankAccountGETID, basename="account")
 router.register(r"transaction queryes", TransactionGetQuerys, basename="transaction_querys")
 router.register(r"transaction purpose", TransactionPurposeViews, basename="purpose")
 

@@ -11,9 +11,20 @@ from bank_transaction.serializers import BankAccountSerializer, TransactionSeria
 
 # Create your views here.
 
-# class BankAccountViews(viewsets.ModelViewSet):
-#     queryset = BankAccount.objects.all()
-#     serializer_class = BankAccountSerializer
+class BankAccountGETID(viewsets.ModelViewSet):
+    queryset = BankAccount.objects.all()
+    serializer_class = BankAccountSerializer
+
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        user_id = self.request.query_params.get("user_id")
+
+        if user_id:
+            queryset = queryset.filter(user_id=user_id)
+        return queryset
 
 
 class BankAccountViews(APIView):
@@ -37,7 +48,7 @@ class BankAccountViews(APIView):
 class TransactionGetQuerys(viewsets.ModelViewSet):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer    
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = super().get_queryset()

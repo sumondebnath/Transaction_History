@@ -4,7 +4,7 @@ from bank_transaction.models import BankAccount, Transaction, TransactionPurpose
 
 
 class BankAccountSerializer(serializers.ModelSerializer):
-
+    user = serializers.StringRelatedField(read_only=True)
     class Meta:
         model = BankAccount
         fields = "__all__"
@@ -12,6 +12,11 @@ class BankAccountSerializer(serializers.ModelSerializer):
 
 
 class TransactionSerializer(serializers.ModelSerializer):
+
+    transaction_type = serializers.StringRelatedField(read_only=True)
+    current_account = serializers.StringRelatedField(read_only=True)
+    transfer_account = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model = Transaction
         fields = "__all__"
