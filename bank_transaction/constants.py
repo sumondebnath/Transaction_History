@@ -1,19 +1,19 @@
 
-DEBIT = 1
-CRADIT = 2
+# DEBIT = 1
+# CRADIT = 2
 
 ACCOUNT_TYPE = [
-    (DEBIT, "Debit"),
-    (CRADIT, "Cradit"),
+    ("DEBIT", "Debit"),
+    ("CRADIT", "Cradit"),
 ]
 
 
-EXPENSE = 1
-INCOME = 2
+# EXPENSE = 1
+# INCOME = 2
 
 TRANSACTION_TYPE = [
-    (EXPENSE, "EXPENSE"),
-    (INCOME, "INCOME"),
+    ("EXPENSE", "EXPENSE"),
+    ("INCOME", "INCOME"),
 ]
 
 
