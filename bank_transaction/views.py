@@ -61,7 +61,7 @@ class TransactionGetQuerys(viewsets.ModelViewSet):
 
 
 class TransactionViews(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     def get(self, request):
         transactions = Transaction.objects.all()
         serializer = TransactionSerializer(transactions, many=True)

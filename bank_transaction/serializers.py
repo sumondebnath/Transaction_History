@@ -13,9 +13,9 @@ class BankAccountSerializer(serializers.ModelSerializer):
 
 class TransactionSerializer(serializers.ModelSerializer):
 
-    transaction_type = serializers.StringRelatedField(read_only=True)
-    current_account = serializers.StringRelatedField(read_only=True)
-    transfer_account = serializers.StringRelatedField(read_only=True)
+    # transaction_type = serializers.StringRelatedField(read_only=True)
+    # current_account = serializers.StringRelatedField(read_only=True)
+    # transfer_account = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Transaction
